@@ -211,7 +211,7 @@ const DriverDashboardScreen: React.FC = () => {
 
     return (
         <>
-            <div className="space-y-6">
+            <div className="space-y-6 pb-20"> {/* Added padding bottom to accommodate sticky button */}
                 <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
                     <DashboardCard title="Today's Revenue" value={formatCurrency(todaysRevenue)} icon={<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6"><path strokeLinecap="round" strokeLinejoin="round" d="M12 6v12m-3-2.818.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.825-1.106-2.257 0-3.082C10.544 7.219 11.275 7 12 7c.725 0 1.45.22 2.003.659m-2.003 6v.008Z" /></svg>} />
                     {settings.showDriverItemsSold && (
@@ -428,6 +428,26 @@ const DriverDashboardScreen: React.FC = () => {
                     </div>
                 </div>
             </div>
+            {cartItems.length > 0 && (
+                <div className="fixed bottom-0 left-0 right-0 p-4 bg-background border-t border-border shadow-lg z-50">
+                    <div className="container mx-auto flex items-center justify-between">
+                        <div className="font-bold text-lg">
+                            <span>Total: {formatCurrency(cartTotal)}</span>
+                        </div>
+                        <Button 
+                            onClick={handleProceedToPayment} 
+                            disabled={!isShiftActive || !currentAssignment}
+                            className="flex items-center gap-2"
+                            size="lg"
+                        >
+                            <span>Pay Now</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 0 0 2.25-2.25V6.75A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25v10.5A2.25 2.25 0 0 0 4.5 19.5Z" />
+                            </svg>
+                        </Button>
+                    </div>
+                </div>
+            )}
             <SaleConfirmationModal
                 isOpen={isSaleModalOpen}
                 onClose={() => setIsSaleModalOpen(false)}

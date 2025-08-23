@@ -429,42 +429,67 @@ const DashboardScreen: React.FC = () => {
                         <CardTitle>Peak Activity</CardTitle>
                         <CardDescription>Top days & hours (all time)</CardDescription>
                     </CardHeader>
-                    <CardContent className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                        <div>
-                            <h4 className="font-semibold mb-3 text-sm text-foreground/80">Busiest Days</h4>
-                            {analyticsData.topDays.length > 0 ? (
-                                <ul className="space-y-3">
-                                    {analyticsData.topDays.map(([day, count], index) => (
-                                        <li key={day} className="flex items-center text-sm">
-                                            <span className="flex items-center justify-center w-6 h-6 rounded-full bg-secondary mr-3 font-semibold text-xs text-secondary-foreground">{index + 1}</span>
-                                            <div className="flex-1">
-                                                <p className="font-medium">{day}</p>
-                                            </div>
-                                            <p className="font-semibold text-foreground/80">{count} txns</p>
-                                        </li>
-                                    ))}
-                                </ul>
-                            ) : (
-                                <p className="text-sm text-foreground/60">N/A</p>
-                            )}
-                        </div>
-                        <div>
-                            <h4 className="font-semibold mb-3 text-sm text-foreground/80">Busiest Hours</h4>
-                            {analyticsData.topHours.length > 0 ? (
-                                <ul className="space-y-3">
-                                    {analyticsData.topHours.map(([hour, count], index) => (
-                                        <li key={hour} className="flex items-center text-sm">
-                                            <span className="flex items-center justify-center w-6 h-6 rounded-full bg-secondary mr-3 font-semibold text-xs text-secondary-foreground">{index + 1}</span>
-                                            <div className="flex-1">
-                                                <p className="font-medium">{`${hour.padStart(2, '0')}:00`}</p>
-                                            </div>
-                                            <p className="font-semibold text-foreground/80">{count} txns</p>
-                                        </li>
-                                    ))}
-                                </ul>
-                            ) : (
-                                <p className="text-sm text-foreground/60">N/A</p>
-                            )}
+                    <CardContent>
+                        <div className="space-y-6">
+                            <div className="p-4 bg-secondary/30 rounded-lg">
+                                <div className="flex items-center gap-2 mb-4">
+                                    <div className="flex items-center gap-2 flex-1">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 text-foreground/70">
+                                            <path fillRule="evenodd" d="M6.75 2.25A.75.75 0 017.5 3v1.5h9V3A.75.75 0 0118 3v1.5h.75a3 3 0 013 3v11.25a3 3 0 01-3 3H5.25a3 3 0 01-3-3V7.5a3 3 0 013-3H6V3a.75.75 0 01.75-.75zm13.5 9a1.5 1.5 0 00-1.5-1.5H5.25a1.5 1.5 0 00-1.5 1.5v7.5a1.5 1.5 0 001.5 1.5h13.5a1.5 1.5 0 001.5-1.5v-7.5z" clipRule="evenodd" />
+                                        </svg>
+                                        <h4 className="font-semibold text-sm text-foreground/80">Busiest Days</h4>
+                                    </div>
+                                    <span className="text-xs text-foreground/60 bg-secondary px-2 py-1 rounded">Top 3</span>
+                                </div>
+                                {analyticsData.topDays.length > 0 ? (
+                                    <ul className="grid gap-2">
+                                        {analyticsData.topDays.map(([day, count], index) => (
+                                            <li key={day} className="flex items-center justify-between text-sm bg-card/50 rounded-md p-3">
+                                                <div className="flex items-center gap-3">
+                                                    <span className="flex items-center justify-center w-6 h-6 rounded-full bg-secondary font-semibold text-xs text-secondary-foreground">{index + 1}</span>
+                                                    <p className="font-medium">{day}</p>
+                                                </div>
+                                                <div className="flex items-center gap-1.5">
+                                                    <p className="font-semibold text-accent">{count}</p>
+                                                    <p className="text-xs text-foreground/70">txns</p>
+                                                </div>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                ) : (
+                                    <p className="text-sm text-foreground/60 text-center py-4">No data available</p>
+                                )}
+                            </div>
+
+                            <div className="p-4 bg-secondary/30 rounded-lg">
+                                <div className="flex items-center gap-2 mb-4">
+                                    <div className="flex items-center gap-2 flex-1">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 text-foreground/70">
+                                            <path fillRule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zM12.75 6a.75.75 0 00-1.5 0v6c0 .414.336.75.75.75h4.5a.75.75 0 000-1.5h-3.75V6z" clipRule="evenodd" />
+                                        </svg>
+                                        <h4 className="font-semibold text-sm text-foreground/80">Busiest Hours</h4>
+                                    </div>
+                                    <span className="text-xs text-foreground/60 bg-secondary px-2 py-1 rounded">Top 3</span>
+                                </div>
+                                {analyticsData.topHours.length > 0 ? (
+                                    <ul className="grid gap-2">
+                                        {analyticsData.topHours.map(([hour, count], index) => (
+                                            <li key={hour} className="flex items-center justify-between text-sm bg-card/50 rounded-md p-3">
+                                                <div className="flex items-center gap-3">
+                                                    <span className="flex items-center justify-center w-6 h-6 rounded-full bg-secondary font-semibold text-xs text-secondary-foreground">{index + 1}</span>
+                                                    <p className="font-medium">{`${hour.padStart(2, '0')}:00`}</p>
+                                                </div>
+                                                <div className="flex items-center gap-1.5">
+                                                    <p className="font-semibold text-accent">{count}</p>
+                                                    <p className="text-xs text-foreground/70">txns</p>
+                                                </div>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                ) : (
+                                    <p className="text-sm text-foreground/60 text-center py-4">No data available</p>
+                                )}
+                            </div>
                         </div>
                     </CardContent>
                 </Card>

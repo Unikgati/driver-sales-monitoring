@@ -124,11 +124,26 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   };
 
   const logout = async () => {
-    setLoading(true); // Set loading true on logout
-    // Reset shift status in localStorage before signing out
-    localStorage.removeItem('driverShiftStatus');
-    await supabase.auth.signOut();
-    // onAuthStateChange will handle clearing the user/session and setting loading to false
+    try {
+      setLoading(true); // Set loading true on logout
+      // Clear all local storage data
+      localStorage.clear(); // This will clear driverShiftStatus and any other cached data
+      
+      // Clear the current user data immediately
+      setUser(null);
+      setSession(null);
+      currentUserIdRef.current = null;
+
+      // Force clear the Supabase session
+      const { error } = await supabase.auth.signOut();
+      if (error) throw error;
+
+    } catch (error) {
+      console.error("Logout error:", error);
+    } finally {
+      // Always set loading to false, regardless of success or failure
+      setLoading(false);
+    }
   };
 
   return (
